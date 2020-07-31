@@ -34,7 +34,9 @@
  			$sampai = $_GET['tanggal_sampai'];
  			?>
  			<a class='btn btn-primary' target="_blank" href='<?php echo base_url().'admin/peminjaman_cetak/?tanggal_mulai='.$mulai.'&tanggal_sampai='.$sampai ?>'>
- 			<i class='fa fa-print'></i> CETAK</a>
+ 			<i class='fa fa-print'></i> CETAK </a>
+ 			<a class='btn btn-primary' target="_blank" href='<?php echo base_url().'admin/laporan_pdf/?tanggal_mulai='.$mulai.'&tanggal_sampai='.$sampai ?>'>
+ 			<i class='fa fa-pdf'></i> PDF </a>
  			<?php
  		}
  		?>

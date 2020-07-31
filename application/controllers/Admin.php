@@ -265,10 +265,39 @@ class Admin extends CI_Controller {
 
 			redirect(base_url('admin/peminjaman'));
 		}
-//Akhir peminjaman
 
+
+	}
+
+	function laporan_pdf(){
+		if(isset($_GET['tanggal_mulai']) && isset($_GET['tanggal_sampai']))
+		{
+			$mulai = $this->input->get('tanggal_mulai');
+			$sampai = $this->input->get('tanggal_sampai');
+
+				// mengambil data peminjaman berdasarkan tanggal mulai sampai tanggalsampai
+			$data['peminjaman'] = $this->db->query("SELECT * FROM peminjaman,buku,anggota 
+				WHERE peminjaman.peminjaman_buku=buku.id 
+				AND peminjaman.peminjaman_anggota=anggota.id 
+				AND  date(peminjaman_tanggal_mulai) >= '$mulai' 
+				AND date(peminjaman_tanggal_mulai) <= '$sampai' 
+				ORDER BY peminjaman_id DESC")->result();
+
+			//load lib pdf
+			$this->load->library('pdf');
+
+
+			$this->pdf->setPaper('A4', 'potrait');
+			$this->pdf->filename = "laporan-peminjaman.pdf";
+			$this->pdf->load_view('admin/v_laporan_pdf', $data);
+		}else{
+
+			redirect(base_url('admin/peminjaman'));
+		}
+
+	//Akhir peminjaman
 	}
 }
 
-	/* End of file Admin.php */
+/* End of file Admin.php */
 /* Location: ./application/controllers/Admin.php */
